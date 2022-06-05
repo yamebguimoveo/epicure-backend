@@ -21,11 +21,10 @@ export class HomepageController {
       const restaurantHandler = new RestaurantHandler();
       const chefHandler = new ChefHandler();
       let chef: any = await chefHandler.getChefs({ name: "Yoosi Shitrit" });
+      console.log(chef);
       const chefRestaurants = await restaurantHandler.getRestaurants({
-        // chef: chef[0]._id,
+        chef: chef[0]._id,
       });
-      console.log(chefRestaurants);
-
       const restaurants = await restaurantHandler.getRestaurants({
         limit: "9",
         page: "1",

@@ -38,7 +38,6 @@ export class ChefController {
     try {
       const handler = new ChefHandler();
       const chefs = await handler.getChefs(req.query);
-      console.log(chefs);
       res.json({
         status: 200,
         data: { chefs },

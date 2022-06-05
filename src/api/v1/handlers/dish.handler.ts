@@ -18,8 +18,6 @@ export class DishHandler {
       const dishes = await query;
       return dishes;
     } catch (err) {
-      console.log(err);
-
       throw err;
     }
   }
@@ -43,7 +41,6 @@ export class DishHandler {
 
   public async deleteDish(id: string) {
     try {
-      console.log(id);
       const newDish = await Dish.findByIdAndDelete(id);
       return newDish;
     } catch (err) {
@@ -53,7 +50,6 @@ export class DishHandler {
 
   public async updateDish(id: string, update: any) {
     try {
-      console.log(id, update);
       const newDish = await Dish.findByIdAndUpdate(id, update, { new: true });
       return newDish;
     } catch (err) {

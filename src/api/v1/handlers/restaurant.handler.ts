@@ -5,13 +5,13 @@ require("../../../db/models/chef.model.ts");
 export class RestaurantHandler {
   public async getRestaurants(reqQuery: any) {
     try {
+      console.log(reqQuery, "\n this is request query ");
+
       let query = Restaurant.find();
       new APIFeatures(query, reqQuery).filter().sort().limitFields().paginate();
       const restaurants = await query.populate("chef");
-
       return restaurants;
     } catch (err) {
-      console.log(err);
       throw err;
     }
   }
@@ -32,15 +32,12 @@ export class RestaurantHandler {
       });
       return restaurant;
     } catch (err) {
-      console.log(err);
-
       throw err;
     }
   }
 
   public async deleteRestaurant(id: string) {
     try {
-      console.log(id);
       const restaurant = await Restaurant.findByIdAndDelete(id).populate({
         path: "chef",
         select: "name _id",
@@ -53,7 +50,6 @@ export class RestaurantHandler {
 
   public async updateRestaurant(id: string, update: any) {
     try {
-      console.log(id, update);
       const newRestaurant = await Restaurant.findByIdAndUpdate(id, update, {
         new: true,
       }).populate({ path: "chef", select: "name _id" });

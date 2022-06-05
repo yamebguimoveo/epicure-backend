@@ -15,8 +15,6 @@ export class APIFeatures {
     let queryStr = JSON.stringify(queryObj);
     queryStr = queryStr.replace(/\b(gte|gt|lte|lt)\b/g, (match) => `$${match}`);
     this.query = this.query.find(JSON.parse(queryStr));
-    console.log(queryStr);
-
     return this;
   }
 
@@ -44,7 +42,6 @@ export class APIFeatures {
       const page = this.queryString.page * 1 || 1;
       const limit = this.queryString.limit * 1 || 1;
       const skip = (page - 1) * limit;
-      console.log(page, skip, limit);
 
       this.query = this.query.skip(skip).limit(limit);
     }

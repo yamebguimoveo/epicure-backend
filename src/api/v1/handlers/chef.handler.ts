@@ -36,7 +36,6 @@ export class ChefHandler {
 
   public async deleteChef(id: string) {
     try {
-      console.log(id);
       const chef = await Chef.findByIdAndDelete(id);
       return chef;
     } catch (err) {
@@ -46,7 +45,6 @@ export class ChefHandler {
 
   public async updateChef(id: string, update: any) {
     try {
-      console.log(id, update);
       const newChef = await Chef.findByIdAndUpdate(id, update, { new: true });
       return newChef;
     } catch (err) {

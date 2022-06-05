@@ -38,7 +38,6 @@ export class RestaurantController {
     try {
       const handler = new RestaurantHandler();
       const restaurants = await handler.getRestaurants(req.query);
-      console.log(restaurants);
       res.status(200).json({
         status: "success",
         data: { restaurants },

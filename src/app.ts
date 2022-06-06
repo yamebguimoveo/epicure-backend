@@ -21,7 +21,7 @@ class App {
     mongoose
       .connect(DB)
       .then((connect) => {
-        console.log("connected to db");
+        console.log("connected to db!");
       })
       .catch((err) => console.log("failed to connect to db"));
   }

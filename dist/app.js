@@ -21,7 +21,7 @@ class App {
         mongoose_1.default
             .connect(mongo_init_1.default)
             .then((connect) => {
-            console.log("connect to db");
+            console.log("connected to db!");
         })
             .catch((err) => console.log("failed to connect to db"));
     }

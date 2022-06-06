@@ -15,9 +15,9 @@ class App {
   }
 
   private initializeMiddlewares() {
-    if (process.env.NODE_ENV === "production") {
-      this.app.use(helmet());
-    }
+    // if (process.env.NODE_ENV === "production") {
+    //   this.app.use(helmet());
+    // }
     this.app.use(express.json());
     this.app.use(cors());
   }

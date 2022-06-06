@@ -1,0 +1,28 @@
+{
+  "apps": [
+    {
+      "name": "epicure",
+      "script": "./dist/server.js",
+      "env": {}
+    }
+  ],
+  "deploy": {
+    "staging": {
+      "key": "~/Desktop/epicure/EpicurePairKey.pem",
+      "user": "ubuntu",
+      "host": ["ec2-54-87-232-33.compute-1.amazonaws.com"],
+      "ref": "origin/main",
+      "repo": "git@github.com:yamebguimoveo/epicure-backend.git",
+      "path": "/home/ubuntu/epicure-server",
+
+      "ssh_options": "StrictHostKeyChecking=no",
+
+      "post-deploy": "mkdir -p logs && npm i & pm2 reload ecosystem.json --env staging",
+
+      "pre-deploy-local": "echo 'Deploying code to servers'",
+      "env": {
+        "NODE_ENV": "staging"
+      }
+    }
+  }
+}

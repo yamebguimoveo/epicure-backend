@@ -1,42 +1,43 @@
 "use strict";
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", { value: true });
 exports.Dish = void 0;
-var mongoose_1 = require("mongoose");
-var dishSchema = new mongoose_1.Schema({
+const mongoose_1 = require("mongoose");
+const dishSchema = new mongoose_1.Schema({
     name: {
         type: String,
         required: true,
-        unique: true
+        unique: true,
     },
     imageSrc: {
-        type: String
+        type: String,
     },
     price: {
         type: Number,
-        required: true
+        required: true,
     },
     restaurant: {
         type: mongoose_1.Schema.Types.ObjectId,
         ref: "Restaurant",
-        required: true
+        required: true,
     },
     description: {
-        type: String
+        type: String,
     },
     sensitivities: {
-        type: [String]
+        type: [String],
     },
     lunch: {
         type: Boolean,
-        "default": false
+        default: false,
     },
     breakfast: {
         type: Boolean,
-        "default": false
+        default: false,
     },
     dinner: {
         type: Boolean,
-        "default": false
-    }
+        default: false,
+    },
 }, { timestamps: true });
 exports.Dish = (0, mongoose_1.model)("Dish", dishSchema);
+//# sourceMappingURL=dish.model.js.map

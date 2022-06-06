@@ -1,6 +1,6 @@
 import { Restaurant } from "../../../db/models/restaurant.model";
 import { APIFeatures } from "../utils/ApiFeatures";
-require("../../../db/models/chef.model.ts");
+// require("../../../db/models/chef.model.ts");
 
 export class RestaurantHandler {
   public async getRestaurants(reqQuery: any) {

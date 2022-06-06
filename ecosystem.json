@@ -3,11 +3,7 @@
     {
       "name": "epicure",
       "script": "./dist/server.js",
-      "env": {
-        "MONGO_URI": "mongodb+srv://yam:KhjGjHSQwKNw7pdO@epicure.quolp.mongodb.net/epicure?retryWrites=true&w=majority",
-        "JWT_SECRET": "secret",
-        "JWT_EXPIRES_IN": "1h"
-      }
+      "env": {}
     }
   ],
   "deploy": {
@@ -30,5 +26,3 @@
     }
   }
 }
-
-

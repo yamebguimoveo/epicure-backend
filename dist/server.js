@@ -1,8 +1,9 @@
 "use strict";
 exports.__esModule = true;
 var app_1 = require("./app");
-var dotenv_1 = require("dotenv");
-dotenv_1["default"].config();
+// import dotenv from "dotenv";
+var dotenv = require("dotenv");
+dotenv.config();
 require("./db/mongo-init");
 var port = 3001;
 var app = new app_1["default"](port);

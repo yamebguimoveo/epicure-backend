@@ -9,12 +9,11 @@ const helmet_1 = __importDefault(require("helmet"));
 const routes_1 = __importDefault(require("./api/routes"));
 const mongo_init_1 = __importDefault(require("./db/mongo-init"));
 const mongoose_1 = __importDefault(require("mongoose"));
-const dotenv_1 = __importDefault(require("dotenv"));
 class App {
     constructor(port) {
         this.app = (0, express_1.default)();
         this.port = port;
-        dotenv_1.default.config({ path: "../.env" });
+        console.log(process.env);
         this.connectToDB();
         this.initializeMiddlewares();
         this.initializeRoutes();

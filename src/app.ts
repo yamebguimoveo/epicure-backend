@@ -13,7 +13,8 @@ class App {
   constructor(port: number) {
     this.app = express();
     this.port = port;
-    dotenv.config({ path: "../.env" });
+    
+    console.log(process.env);
     this.connectToDB();
     this.initializeMiddlewares();
     this.initializeRoutes();

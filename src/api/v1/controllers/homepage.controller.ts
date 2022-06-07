@@ -20,7 +20,7 @@ export class HomepageController {
       const dishHandler = new DishHandler();
       const restaurantHandler = new RestaurantHandler();
       const chefHandler = new ChefHandler();
-      let chef: any = await chefHandler.getChefs({ name: "Yoosi Shitrit" });
+      let chef: any = await chefHandler.getChefs({ name: "Yossi Shitrit" });
       console.log(chef);
       const chefRestaurants = await restaurantHandler.getRestaurants({
         chef: chef[0]._id,

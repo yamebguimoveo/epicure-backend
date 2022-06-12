@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.RestaurantHandler = void 0;
 const restaurant_model_1 = require("../../../db/models/restaurant.model");
+const utils_1 = require("../utils");
 const ApiFeatures_1 = require("../utils/ApiFeatures");
 // require("../../../db/models/chef.model.ts");
 class RestaurantHandler {
@@ -11,9 +12,11 @@ class RestaurantHandler {
             let query = restaurant_model_1.Restaurant.find();
             new ApiFeatures_1.APIFeatures(query, reqQuery).filter().sort().limitFields().paginate();
             const restaurants = await query.populate("chef");
-            return restaurants;
+            const count = await restaurant_model_1.Restaurant.count((0, utils_1.removeProperties)(reqQuery));
+            return { restaurants, count };
         }
         catch (err) {
+            console.log(err);
             throw err;
         }
     }

@@ -1,4 +1,5 @@
 import { Restaurant } from "../../../db/models/restaurant.model";
+import { removeProperties } from "../utils";
 import { APIFeatures } from "../utils/ApiFeatures";
 // require("../../../db/models/chef.model.ts");
 
@@ -10,8 +11,11 @@ export class RestaurantHandler {
       let query = Restaurant.find();
       new APIFeatures(query, reqQuery).filter().sort().limitFields().paginate();
       const restaurants = await query.populate("chef");
-      return restaurants;
+      const count = await Restaurant.count(removeProperties(reqQuery));
+      return { restaurants, count };
     } catch (err) {
+      console.log(err);
+
       throw err;
     }
   }

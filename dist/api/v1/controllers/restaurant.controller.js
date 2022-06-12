@@ -23,10 +23,10 @@ class RestaurantController {
     async getRestaurants(req, res, next) {
         try {
             const handler = new restaurant_handler_1.RestaurantHandler();
-            const restaurants = await handler.getRestaurants(req.query);
+            const { restaurants, count } = await handler.getRestaurants(req.query);
             res.status(200).json({
                 status: "success",
-                data: { restaurants },
+                data: { restaurants, count },
             });
         }
         catch (err) {

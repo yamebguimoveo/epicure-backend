@@ -37,10 +37,10 @@ export class RestaurantController {
   async getRestaurants(req: Request, res: Response, next: NextFunction) {
     try {
       const handler = new RestaurantHandler();
-      const restaurants = await handler.getRestaurants(req.query);
+      const { restaurants, count } = await handler.getRestaurants(req.query);
       res.status(200).json({
         status: "success",
-        data: { restaurants },
+        data: { restaurants, count },
       });
     } catch (err) {
       res

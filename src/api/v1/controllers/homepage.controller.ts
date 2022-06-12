@@ -25,7 +25,7 @@ export class HomepageController {
       const chefRestaurants = await restaurantHandler.getRestaurants({
         chef: chef[0]._id,
       });
-      const restaurants = await restaurantHandler.getRestaurants({
+      const { restaurants } = await restaurantHandler.getRestaurants({
         limit: "9",
         page: "1",
       });
@@ -36,7 +36,7 @@ export class HomepageController {
       res.status(200).send({
         status: "success",
         data: {
-          chef: { ...chef[0]._doc, restaurants: chefRestaurants },
+          chef: { ...chef[0]._doc, restaurants: chefRestaurants.restaurants },
           restaurants,
           dishes,
         },

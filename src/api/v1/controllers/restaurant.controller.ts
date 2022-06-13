@@ -11,6 +11,10 @@ export class RestaurantController {
 
   protected initializeRoutes() {
     this.router
+      .route("/updateAvailablity")
+      .get(this.updateRestaurantsAvailable.bind(this));
+    
+    this.router
       .route("/")
       .get(this.getRestaurants.bind(this))
       .post(
@@ -32,6 +36,25 @@ export class RestaurantController {
         Authenticator.restrictToAdmin,
         this.updateRestaurant.bind(this)
       );
+  }
+
+  async updateRestaurantsAvailable(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) {
+    try {
+      const handler = new RestaurantHandler();
+      await handler.updateRestaurantAvailavle();
+      res.status(200).json({
+        status: "success",
+      });
+    } catch (err) {
+      res.status(400).json({
+        status: "fail",
+        message: "could not refresh open restaurants",
+      });
+    }
   }
 
   async getRestaurants(req: Request, res: Response, next: NextFunction) {

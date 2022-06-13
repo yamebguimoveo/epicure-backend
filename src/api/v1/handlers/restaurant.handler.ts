@@ -5,6 +5,21 @@ import { openRestaurantsFilterFunc } from "../utils/restaurantsFilter";
 // require("../../../db/models/chef.model.ts");
 
 export class RestaurantHandler {
+  public async updateRestaurantAvailavle() {
+    try {
+      const allRestaurants = await Restaurant.find({});
+      const restaurantsOpenID = openRestaurantsFilterFunc(
+        true,
+        allRestaurants
+      );
+      await Restaurant.updateMany({}, { isOpen: false });
+      restaurantsOpenID.forEach(async (id: any) => {
+        await Restaurant.findByIdAndUpdate(id, { isOpen: true });
+      });
+    } catch (err) {
+      throw err; 
+    }
+  }
   public async getRestaurants(reqQuery: any) {
     try {
       /* 
@@ -16,18 +31,6 @@ export class RestaurantHandler {
       findByIdAndUpdate: {isOpen: answer}
       
       */
-      if (reqQuery.isOpen !== undefined) {
-        const allRestaurants = await Restaurant.find({});
-        const restaurantsOpenID = openRestaurantsFilterFunc(
-          reqQuery,
-          allRestaurants
-        );
-        await Restaurant.updateMany({}, { isOpen: false });
-        restaurantsOpenID.forEach(async (id: any) => {
-          await Restaurant.findByIdAndUpdate(id, { isOpen: true });
-        });
-      }
-
       console.log(reqQuery, "\n this is request query ");
 
       let query = Restaurant.find();

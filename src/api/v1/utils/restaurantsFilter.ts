@@ -22,7 +22,7 @@ export const openRestaurantsFilterFunc = (isOpen: any, restaurants: any) => {
       flag = false;
     }
 
-    if (flag === JSON.parse(isOpen.isOpen)) {
+    if (flag === JSON.parse(isOpen)) {
       return restaurant._id;
     }
   });

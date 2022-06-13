@@ -26,7 +26,7 @@ const openRestaurantsFilterFunc = (isOpen, restaurants) => {
         else {
             flag = false;
         }
-        if (flag === JSON.parse(isOpen.isOpen)) {
+        if (flag === JSON.parse(isOpen)) {
             return restaurant._id;
         }
     });

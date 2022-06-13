@@ -7,6 +7,19 @@ const ApiFeatures_1 = require("../utils/ApiFeatures");
 const restaurantsFilter_1 = require("../utils/restaurantsFilter");
 // require("../../../db/models/chef.model.ts");
 class RestaurantHandler {
+    async updateRestaurantAvailavle() {
+        try {
+            const allRestaurants = await restaurant_model_1.Restaurant.find({});
+            const restaurantsOpenID = (0, restaurantsFilter_1.openRestaurantsFilterFunc)(true, allRestaurants);
+            await restaurant_model_1.Restaurant.updateMany({}, { isOpen: false });
+            restaurantsOpenID.forEach(async (id) => {
+                await restaurant_model_1.Restaurant.findByIdAndUpdate(id, { isOpen: true });
+            });
+        }
+        catch (err) {
+            throw err;
+        }
+    }
     async getRestaurants(reqQuery) {
         try {
             /*
@@ -18,14 +31,6 @@ class RestaurantHandler {
             findByIdAndUpdate: {isOpen: answer}
             
             */
-            if (reqQuery.isOpen !== undefined) {
-                const allRestaurants = await restaurant_model_1.Restaurant.find({});
-                const restaurantsOpenID = (0, restaurantsFilter_1.openRestaurantsFilterFunc)(reqQuery, allRestaurants);
-                await restaurant_model_1.Restaurant.updateMany({}, { isOpen: false });
-                restaurantsOpenID.forEach(async (id) => {
-                    await restaurant_model_1.Restaurant.findByIdAndUpdate(id, { isOpen: true });
-                });
-            }
             console.log(reqQuery, "\n this is request query ");
             let query = restaurant_model_1.Restaurant.find();
             new ApiFeatures_1.APIFeatures(query, reqQuery).filter().sort().limitFields().paginate();

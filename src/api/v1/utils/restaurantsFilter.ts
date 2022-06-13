@@ -4,7 +4,7 @@ export const openRestaurantsFilterFunc = (
   isOpen: boolean,
   restaurants: any
 ) => {
-  const { hour, minute } = DateTime.now();
+  const { hour, minute } = DateTime.now().setZone("Israel/Jerusalem");
   console.log("$$$" + hour + "$$" + minute);
   console.log("$$$$$" + restaurants.length);
 

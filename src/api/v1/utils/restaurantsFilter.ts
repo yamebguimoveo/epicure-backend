@@ -1,6 +1,9 @@
 import { DateTime } from "luxon";
 
-export const openRestaurantsFilterFunc = (isOpen: any, restaurants: any) => {
+export const openRestaurantsFilterFunc = (
+  isOpen: boolean,
+  restaurants: any
+) => {
   const { hour, minute } = DateTime.now();
   const filteredRestaurant = restaurants.filter((restaurant: any) => {
     const openTime = restaurant.openingHours.open;
@@ -22,7 +25,7 @@ export const openRestaurantsFilterFunc = (isOpen: any, restaurants: any) => {
       flag = false;
     }
 
-    if (flag === JSON.parse(isOpen)) {
+    if (flag === isOpen) {
       return restaurant._id;
     }
   });

@@ -15,6 +15,7 @@ class RestaurantHandler {
             restaurantsOpenID.forEach(async (id) => {
                 await restaurant_model_1.Restaurant.findByIdAndUpdate(id, { isOpen: true });
             });
+            return;
         }
         catch (err) {
             throw err;
@@ -22,15 +23,6 @@ class RestaurantHandler {
     }
     async getRestaurants(reqQuery) {
         try {
-            /*
-            get a query for all hte restaurant
-            then loop each restaurant
-            then you have a single object.
-            check if it open using the openRestaurantFilterFunc - for a single.
-            acoording to the answer:
-            findByIdAndUpdate: {isOpen: answer}
-            
-            */
             console.log(reqQuery, "\n this is request query ");
             let query = restaurant_model_1.Restaurant.find();
             new ApiFeatures_1.APIFeatures(query, reqQuery).filter().sort().limitFields().paginate();

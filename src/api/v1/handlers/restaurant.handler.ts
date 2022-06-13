@@ -8,29 +8,18 @@ export class RestaurantHandler {
   public async updateRestaurantAvailavle() {
     try {
       const allRestaurants = await Restaurant.find({});
-      const restaurantsOpenID = openRestaurantsFilterFunc(
-        true,
-        allRestaurants
-      );
+      const restaurantsOpenID = openRestaurantsFilterFunc(true, allRestaurants);
       await Restaurant.updateMany({}, { isOpen: false });
       restaurantsOpenID.forEach(async (id: any) => {
         await Restaurant.findByIdAndUpdate(id, { isOpen: true });
       });
+      return;
     } catch (err) {
-      throw err; 
+      throw err;
     }
   }
   public async getRestaurants(reqQuery: any) {
     try {
-      /* 
-      get a query for all hte restaurant
-      then loop each restaurant
-      then you have a single object.
-      check if it open using the openRestaurantFilterFunc - for a single.
-      acoording to the answer:
-      findByIdAndUpdate: {isOpen: answer}
-      
-      */
       console.log(reqQuery, "\n this is request query ");
 
       let query = Restaurant.find();

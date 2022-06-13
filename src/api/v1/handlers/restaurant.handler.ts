@@ -9,7 +9,7 @@ export class RestaurantHandler {
     try {
       const allRestaurants = await Restaurant.find({});
       const restaurantsOpenID = openRestaurantsFilterFunc(true, allRestaurants);
-      await Restaurant.updateMany({}, { isOpen: false });
+      await Restaurant.updateMany({ isOpen: true }, { isOpen: false });
       restaurantsOpenID.forEach(async (id: any) => {
         await Restaurant.findByIdAndUpdate(id, { isOpen: true });
       });
@@ -25,7 +25,11 @@ export class RestaurantHandler {
       let query = Restaurant.find();
 
       new APIFeatures(query, reqQuery).filter().sort().limitFields().paginate();
+      console.log(query);
       let restaurants: any = await query.populate("chef");
+      const rests = await Restaurant.find({ isOpen: true });
+      console.log(rests);
+
       let count = await Restaurant.count(removeProperties(reqQuery));
       return { restaurants, count };
     } catch (err) {

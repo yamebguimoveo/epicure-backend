@@ -11,7 +11,9 @@ export class RestaurantHandler {
       const restaurantsOpenID = openRestaurantsFilterFunc(true, allRestaurants);
       await Restaurant.updateMany({ isOpen: true }, { isOpen: false });
       restaurantsOpenID.forEach(async (id: any) => {
-        await Restaurant.findByIdAndUpdate(id, { isOpen: true });
+        console.log(id + "$$$$");
+
+        await Restaurant.findByIdAndUpdate(id._id, { isOpen: true });
       });
       return restaurantsOpenID;
     } catch (err) {

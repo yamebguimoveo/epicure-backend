@@ -15,7 +15,7 @@ class RestaurantHandler {
             restaurantsOpenID.forEach(async (id) => {
                 await restaurant_model_1.Restaurant.findByIdAndUpdate(id, { isOpen: true });
             });
-            return;
+            return restaurantsOpenID;
         }
         catch (err) {
             throw err;

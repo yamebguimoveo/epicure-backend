@@ -26,9 +26,10 @@ class RestaurantController {
     async updateRestaurantsAvailable(req, res, next) {
         try {
             const handler = new restaurant_handler_1.RestaurantHandler();
-            await handler.updateRestaurantAvailavle();
+            const openIds = await handler.updateRestaurantAvailavle();
             res.status(200).json({
                 status: "success",
+                openIds,
             });
         }
         catch (err) {

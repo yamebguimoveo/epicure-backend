@@ -13,7 +13,7 @@ export class RestaurantController {
     this.router
       .route("/updateAvailablity")
       .get(this.updateRestaurantsAvailable.bind(this));
-    
+
     this.router
       .route("/")
       .get(this.getRestaurants.bind(this))
@@ -45,9 +45,10 @@ export class RestaurantController {
   ) {
     try {
       const handler = new RestaurantHandler();
-      await handler.updateRestaurantAvailavle();
+      const openIds = await handler.updateRestaurantAvailavle();
       res.status(200).json({
         status: "success",
+        openIds,
       });
     } catch (err) {
       res.status(400).json({

@@ -13,7 +13,7 @@ export class RestaurantHandler {
       restaurantsOpenID.forEach(async (id: any) => {
         await Restaurant.findByIdAndUpdate(id, { isOpen: true });
       });
-      return;
+      return restaurantsOpenID;
     } catch (err) {
       throw err;
     }

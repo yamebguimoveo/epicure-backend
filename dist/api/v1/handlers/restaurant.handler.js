@@ -4,15 +4,33 @@ exports.RestaurantHandler = void 0;
 const restaurant_model_1 = require("../../../db/models/restaurant.model");
 const utils_1 = require("../utils");
 const ApiFeatures_1 = require("../utils/ApiFeatures");
+const restaurantsFilter_1 = require("../utils/restaurantsFilter");
 // require("../../../db/models/chef.model.ts");
 class RestaurantHandler {
     async getRestaurants(reqQuery) {
         try {
+            /*
+            get a query for all hte restaurant
+            then loop each restaurant
+            then you have a single object.
+            check if it open using the openRestaurantFilterFunc - for a single.
+            acoording to the answer:
+            findByIdAndUpdate: {isOpen: answer}
+            
+            */
+            if (reqQuery.isOpen !== undefined) {
+                const allRestaurants = await restaurant_model_1.Restaurant.find({});
+                const restaurantsOpenID = (0, restaurantsFilter_1.openRestaurantsFilterFunc)(reqQuery, allRestaurants);
+                await restaurant_model_1.Restaurant.updateMany({}, { isOpen: false });
+                restaurantsOpenID.forEach(async (id) => {
+                    await restaurant_model_1.Restaurant.findByIdAndUpdate(id, { isOpen: true });
+                });
+            }
             console.log(reqQuery, "\n this is request query ");
             let query = restaurant_model_1.Restaurant.find();
             new ApiFeatures_1.APIFeatures(query, reqQuery).filter().sort().limitFields().paginate();
-            const restaurants = await query.populate("chef");
-            const count = await restaurant_model_1.Restaurant.count((0, utils_1.removeProperties)(reqQuery));
+            let restaurants = await query.populate("chef");
+            let count = await restaurant_model_1.Restaurant.count((0, utils_1.removeProperties)(reqQuery));
             return { restaurants, count };
         }
         catch (err) {

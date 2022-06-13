@@ -27,6 +27,16 @@ const restaurantSchema = new mongoose_1.Schema({
         type: Boolean,
         default: false,
     },
+    openingHours: {
+        _id: false,
+        type: {
+            open: String,
+            close: String,
+        },
+        default: { open: "07:00", close: "21:00" },
+        minlength: 5,
+        maxlength: 5,
+    },
 }, { timestamps: true });
 exports.Restaurant = (0, mongoose_1.model)("Restaurant", restaurantSchema);
 //# sourceMappingURL=restaurant.model.js.map

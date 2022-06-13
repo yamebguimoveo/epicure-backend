@@ -9,6 +9,7 @@ export interface IRestaurant {
   isOpen: boolean;
   new: boolean;
   mostPopular: boolean;
+  openingHours: { open: string; close: string };
 }
 
 const restaurantSchema = new Schema<IRestaurant>(
@@ -37,9 +38,18 @@ const restaurantSchema = new Schema<IRestaurant>(
       type: Boolean,
       default: false,
     },
+    openingHours: {
+      _id: false,
+      type: {
+        open: String,
+        close: String,
+      },
+      default: { open: "07:00", close: "21:00" },
+      minlength: 5,
+      maxlength: 5,
+    },
   },
   { timestamps: true }
 );
-
 
 export const Restaurant = model("Restaurant", restaurantSchema);

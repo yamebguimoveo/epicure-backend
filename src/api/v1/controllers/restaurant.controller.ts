@@ -48,7 +48,6 @@ export class RestaurantController {
       const openIds = await handler.updateRestaurantAvailavle();
       res.status(200).json({
         status: "success",
-        openIds,
       });
     } catch (err) {
       res.status(400).json({

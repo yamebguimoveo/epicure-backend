@@ -4,10 +4,10 @@ export const openRestaurantsFilterFunc = (
   isOpen: boolean,
   restaurants: any
 ) => {
-  const { hour, minute } = DateTime.now().setZone("Israel/Jerusalem");
-  console.log("$$$" + hour + "$$" + minute);
-  console.log("$$$$$" + restaurants.length);
-
+  const { hour, minute } = DateTime.now()
+    .setZone("Europe/Paris")
+      .plus({ hour: 1 });
+    
   const filteredRestaurant = restaurants.filter((restaurant: any) => {
     const openTime = restaurant.openingHours.open;
     const openHour = openTime.substring(0, 2);

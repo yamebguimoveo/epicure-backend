@@ -3,9 +3,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.openRestaurantsFilterFunc = void 0;
 const luxon_1 = require("luxon");
 const openRestaurantsFilterFunc = (isOpen, restaurants) => {
-    const { hour, minute } = luxon_1.DateTime.now().setZone("Israel/Jerusalem");
-    console.log("$$$" + hour + "$$" + minute);
-    console.log("$$$$$" + restaurants.length);
+    const { hour, minute } = luxon_1.DateTime.now()
+        .setZone("Europe/Paris")
+        .plus({ hour: 1 });
     const filteredRestaurant = restaurants.filter((restaurant) => {
         const openTime = restaurant.openingHours.open;
         const openHour = openTime.substring(0, 2);

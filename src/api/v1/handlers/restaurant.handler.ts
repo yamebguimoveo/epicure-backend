@@ -27,11 +27,7 @@ export class RestaurantHandler {
       let query = Restaurant.find();
 
       new APIFeatures(query, reqQuery).filter().sort().limitFields().paginate();
-      console.log(query);
       let restaurants: any = await query.populate("chef");
-      const rests = await Restaurant.find({ isOpen: true });
-      console.log(rests);
-
       let count = await Restaurant.count(removeProperties(reqQuery));
       return { restaurants, count };
     } catch (err) {

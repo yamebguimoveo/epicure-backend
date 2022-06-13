@@ -4,6 +4,8 @@ exports.openRestaurantsFilterFunc = void 0;
 const luxon_1 = require("luxon");
 const openRestaurantsFilterFunc = (isOpen, restaurants) => {
     const { hour, minute } = luxon_1.DateTime.now();
+    console.log("$$$" + hour + "$$" + minute);
+    console.log("$$$$$" + restaurants.length);
     const filteredRestaurant = restaurants.filter((restaurant) => {
         const openTime = restaurant.openingHours.open;
         const openHour = openTime.substring(0, 2);

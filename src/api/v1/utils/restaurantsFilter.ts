@@ -5,6 +5,9 @@ export const openRestaurantsFilterFunc = (
   restaurants: any
 ) => {
   const { hour, minute } = DateTime.now();
+  console.log("$$$" + hour + "$$" + minute);
+  console.log("$$$$$" + restaurants.length);
+
   const filteredRestaurant = restaurants.filter((restaurant: any) => {
     const openTime = restaurant.openingHours.open;
     const openHour = openTime.substring(0, 2);

@@ -27,10 +27,7 @@ class RestaurantHandler {
             console.log(reqQuery, "\n this is request query ");
             let query = restaurant_model_1.Restaurant.find();
             new ApiFeatures_1.APIFeatures(query, reqQuery).filter().sort().limitFields().paginate();
-            console.log(query);
             let restaurants = await query.populate("chef");
-            const rests = await restaurant_model_1.Restaurant.find({ isOpen: true });
-            console.log(rests);
             let count = await restaurant_model_1.Restaurant.count((0, utils_1.removeProperties)(reqQuery));
             return { restaurants, count };
         }

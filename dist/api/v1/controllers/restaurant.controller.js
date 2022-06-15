@@ -10,9 +10,9 @@ class RestaurantController {
         this.initializeRoutes();
     }
     initializeRoutes() {
-        this.router
-            .route("/updateAvailablity")
-            .get(this.updateRestaurantsAvailable.bind(this));
+        // this.router
+        //   .route("/updateAvailablity")
+        //   .get(this.updateRestaurantsAvailable.bind(this));
         this.router
             .route("/")
             .get(this.getRestaurants.bind(this))
@@ -23,21 +23,24 @@ class RestaurantController {
             .delete(authenticator_1.Authenticator.protect, authenticator_1.Authenticator.restrictToAdmin, this.deleteRestaurant.bind(this))
             .patch(authenticator_1.Authenticator.protect, authenticator_1.Authenticator.restrictToAdmin, this.updateRestaurant.bind(this));
     }
-    async updateRestaurantsAvailable(req, res, next) {
-        try {
-            const handler = new restaurant_handler_1.RestaurantHandler();
-            const openIds = await handler.updateRestaurantAvailavle();
-            res.status(200).json({
-                status: "success",
-            });
-        }
-        catch (err) {
-            res.status(400).json({
-                status: "fail",
-                message: "could not refresh open restaurants",
-            });
-        }
-    }
+    // async updateRestaurantsAvailable(
+    //   req: Request,
+    //   res: Response,
+    //   next: NextFunction
+    // ) {
+    //   try {
+    //     const handler = new RestaurantHandler();
+    //     const openIds = await handler.updateRestaurantAvailavle();
+    //     res.status(200).json({
+    //       status: "success",
+    //     });
+    //   } catch (err) {
+    //     res.status(400).json({
+    //       status: "fail",
+    //       message: "could not refresh open restaurants",
+    //     });
+    //   }
+    // }
     async getRestaurants(req, res, next) {
         try {
             const handler = new restaurant_handler_1.RestaurantHandler();

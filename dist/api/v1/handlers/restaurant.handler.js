@@ -4,31 +4,47 @@ exports.RestaurantHandler = void 0;
 const restaurant_model_1 = require("../../../db/models/restaurant.model");
 const utils_1 = require("../utils");
 const ApiFeatures_1 = require("../utils/ApiFeatures");
-const restaurantsFilter_1 = require("../utils/restaurantsFilter");
 // require("../../../db/models/chef.model.ts");
+const luxon_1 = require("luxon");
 class RestaurantHandler {
-    async updateRestaurantAvailavle() {
-        try {
-            const allRestaurants = await restaurant_model_1.Restaurant.find({});
-            const restaurantsOpenID = (0, restaurantsFilter_1.openRestaurantsFilterFunc)(true, allRestaurants);
-            await restaurant_model_1.Restaurant.updateMany({ isOpen: true }, { isOpen: false });
-            restaurantsOpenID.forEach(async (id) => {
-                console.log(id + "$$$$");
-                await restaurant_model_1.Restaurant.findByIdAndUpdate(id._id, { isOpen: true });
-            });
-            return restaurantsOpenID;
-        }
-        catch (err) {
-            throw err;
-        }
-    }
+    // public async updateRestaurantAvailavle() {
+    //   try {
+    //     const { hour, minute } = DateTime.now()
+    //       .setZone("Europe/Paris")
+    //       .plus({ hour: 1 });
+    //     const currentTime = hour * 60 + minute;
+    //     // const allRestaurants = await Restaurant.find({});
+    //     // const restaurantsOpenID = openRestaurantsFilterFunc(true, allRestaurants);
+    //     // await Restaurant.updateMany({ isOpen: true }, { isOpen: false });
+    //     // restaurantsOpenID.forEach(async (id: any) => {
+    //     //   console.log(id + "$$$$");
+    //     //   await Restaurant.findByIdAndUpdate(id._id, { isOpen: true });
+    //     // });
+    //     // return restaurantsOpenID;
+    //   } catch (err) {
+    //     throw err;
+    //   }
+    // }
     async getRestaurants(reqQuery) {
         try {
             console.log(reqQuery, "\n this is request query ");
             let query = restaurant_model_1.Restaurant.find();
+            const queryForIsOpen = () => {
+                const { hour, minute } = luxon_1.DateTime.now()
+                    .setZone("Europe/Paris")
+                    .plus({ hour: 1 });
+                const currentTime = hour * 60 + minute;
+                let queryStr = {
+                    "openingHours.open": { $lt: currentTime },
+                    "openingHours.close": { $gt: currentTime },
+                };
+                return queryStr;
+            };
             new ApiFeatures_1.APIFeatures(query, reqQuery).filter().sort().limitFields().paginate();
             let restaurants = await query.populate("chef");
-            let count = await restaurant_model_1.Restaurant.count((0, utils_1.removeProperties)(reqQuery));
+            let count = reqQuery.isOpen
+                ? await restaurant_model_1.Restaurant.count(queryForIsOpen())
+                : await restaurant_model_1.Restaurant.count((0, utils_1.removeProperties)(reqQuery));
             return { restaurants, count };
         }
         catch (err) {

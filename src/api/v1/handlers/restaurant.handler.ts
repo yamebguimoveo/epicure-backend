@@ -3,32 +3,51 @@ import { removeProperties } from "../utils";
 import { APIFeatures } from "../utils/ApiFeatures";
 import { openRestaurantsFilterFunc } from "../utils/restaurantsFilter";
 // require("../../../db/models/chef.model.ts");
+import { DateTime } from "luxon";
 
 export class RestaurantHandler {
-  public async updateRestaurantAvailavle() {
-    try {
-      const allRestaurants = await Restaurant.find({});
-      const restaurantsOpenID = openRestaurantsFilterFunc(true, allRestaurants);
-      await Restaurant.updateMany({ isOpen: true }, { isOpen: false });
-      restaurantsOpenID.forEach(async (id: any) => {
-        console.log(id + "$$$$");
+  // public async updateRestaurantAvailavle() {
+  //   try {
+  //     const { hour, minute } = DateTime.now()
+  //       .setZone("Europe/Paris")
+  //       .plus({ hour: 1 });
+  //     const currentTime = hour * 60 + minute;
 
-        await Restaurant.findByIdAndUpdate(id._id, { isOpen: true });
-      });
-      return restaurantsOpenID;
-    } catch (err) {
-      throw err;
-    }
-  }
+  //     // const allRestaurants = await Restaurant.find({});
+  //     // const restaurantsOpenID = openRestaurantsFilterFunc(true, allRestaurants);
+  //     // await Restaurant.updateMany({ isOpen: true }, { isOpen: false });
+  //     // restaurantsOpenID.forEach(async (id: any) => {
+  //     //   console.log(id + "$$$$");
+
+  //     //   await Restaurant.findByIdAndUpdate(id._id, { isOpen: true });
+  //     // });
+  //     // return restaurantsOpenID;
+  //   } catch (err) {
+  //     throw err;
+  //   }
+  // }
   public async getRestaurants(reqQuery: any) {
     try {
       console.log(reqQuery, "\n this is request query ");
 
       let query = Restaurant.find();
 
+      const queryForIsOpen = () => {
+        const { hour, minute } = DateTime.now()
+          .setZone("Europe/Paris")
+          .plus({ hour: 1 });
+        const currentTime = hour * 60 + minute;
+        let queryStr = {
+          "openingHours.open": { $lt: currentTime },
+          "openingHours.close": { $gt: currentTime },
+        };
+        return queryStr;
+      };
       new APIFeatures(query, reqQuery).filter().sort().limitFields().paginate();
       let restaurants: any = await query.populate("chef");
-      let count = await Restaurant.count(removeProperties(reqQuery));
+      let count = reqQuery.isOpen
+        ? await Restaurant.count( queryForIsOpen())
+        : await Restaurant.count( removeProperties(reqQuery) );
       return { restaurants, count };
     } catch (err) {
       console.log(err);

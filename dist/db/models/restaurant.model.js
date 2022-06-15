@@ -30,12 +30,11 @@ const restaurantSchema = new mongoose_1.Schema({
     openingHours: {
         _id: false,
         type: {
-            open: String,
-            close: String,
+            open: Number,
+            close: Number,
         },
-        default: { open: "07:00", close: "21:00" },
-        minlength: 5,
-        maxlength: 5,
+        default: { open: 420, close: 1260 },
+        required: true,
     },
 }, { timestamps: true });
 exports.Restaurant = (0, mongoose_1.model)("Restaurant", restaurantSchema);

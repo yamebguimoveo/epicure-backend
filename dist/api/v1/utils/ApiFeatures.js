@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.APIFeatures = void 0;
+const luxon_1 = require("luxon");
 class APIFeatures {
     constructor(query, queryString) {
         this.query = query;
@@ -8,12 +9,30 @@ class APIFeatures {
     }
     filter() {
         const queryObj = Object.assign({}, this.queryString);
-        const excludedFields = ["page", "sort", "limit"];
-        excludedFields.forEach((el) => delete queryObj[el]);
-        let queryStr = JSON.stringify(queryObj);
-        queryStr = queryStr.replace(/\b(gte|gt|lte|lt)\b/g, (match) => `$${match}`);
-        this.query = this.query.find(JSON.parse(queryStr));
-        return this;
+        console.log(queryObj);
+        if (queryObj.isOpen) {
+            const { hour, minute } = luxon_1.DateTime.now()
+                .setZone("Europe/Paris")
+                .plus({ hour: 1 });
+            const currentTime = hour * 60 + minute;
+            console.log(currentTime);
+            let queryStr = {
+                "openingHours.open": { $lt: currentTime },
+                "openingHours.close": { $gt: currentTime },
+            };
+            this.query = this.query.find({ queryStr });
+            console.log(this.query);
+            return this;
+        }
+        else {
+            const excludedFields = ["page", "sort", "limit"];
+            excludedFields.forEach((el) => delete queryObj[el]);
+            let queryStr = JSON.stringify(queryObj);
+            queryStr = queryStr.replace(/\b(gte|gt|lte|lt)\b/g, (match) => `$${match}`);
+            console.log(JSON.parse(queryStr));
+            this.query = this.query.find(JSON.parse(queryStr));
+            return this;
+        }
     }
     sort() {
         if (this.queryString.sort) {

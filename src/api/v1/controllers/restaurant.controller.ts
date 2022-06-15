@@ -10,9 +10,9 @@ export class RestaurantController {
   }
 
   protected initializeRoutes() {
-    this.router
-      .route("/updateAvailablity")
-      .get(this.updateRestaurantsAvailable.bind(this));
+    // this.router
+    //   .route("/updateAvailablity")
+    //   .get(this.updateRestaurantsAvailable.bind(this));
 
     this.router
       .route("/")
@@ -38,24 +38,24 @@ export class RestaurantController {
       );
   }
 
-  async updateRestaurantsAvailable(
-    req: Request,
-    res: Response,
-    next: NextFunction
-  ) {
-    try {
-      const handler = new RestaurantHandler();
-      const openIds = await handler.updateRestaurantAvailavle();
-      res.status(200).json({
-        status: "success",
-      });
-    } catch (err) {
-      res.status(400).json({
-        status: "fail",
-        message: "could not refresh open restaurants",
-      });
-    }
-  }
+  // async updateRestaurantsAvailable(
+  //   req: Request,
+  //   res: Response,
+  //   next: NextFunction
+  // ) {
+  //   try {
+  //     const handler = new RestaurantHandler();
+  //     const openIds = await handler.updateRestaurantAvailavle();
+  //     res.status(200).json({
+  //       status: "success",
+  //     });
+  //   } catch (err) {
+  //     res.status(400).json({
+  //       status: "fail",
+  //       message: "could not refresh open restaurants",
+  //     });
+  //   }
+  // }
 
   async getRestaurants(req: Request, res: Response, next: NextFunction) {
     try {

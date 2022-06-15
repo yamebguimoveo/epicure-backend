@@ -20,7 +20,7 @@ class APIFeatures {
                 "openingHours.open": { $lt: currentTime },
                 "openingHours.close": { $gt: currentTime },
             };
-            this.query = this.query.find({ queryStr });
+            this.query = this.query.find(queryStr);
             console.log(this.query);
             return this;
         }

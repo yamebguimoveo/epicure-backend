@@ -9,7 +9,7 @@ export class APIFeatures {
     this.queryString = queryString;
   }
 
-   filter() {
+  filter() {
     const queryObj = { ...this.queryString };
     console.log(queryObj);
     if (queryObj.isOpen) {
@@ -23,8 +23,8 @@ export class APIFeatures {
         "openingHours.open": { $lt: currentTime },
         "openingHours.close": { $gt: currentTime },
       };
-      this.query = this.query.find({queryStr});
-      console.log( this.query);
+      this.query = this.query.find(queryStr);
+      console.log(this.query);
 
       return this;
     } else {
